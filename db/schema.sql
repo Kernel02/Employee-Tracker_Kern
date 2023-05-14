@@ -1,22 +1,22 @@
 CREATE DATABASE company_db;
 USE company_db;
 
-CREATE TABLE department(
+CREATE TABLE departments(
     id INT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(30) NOT NULL
 );
 
-CREATE TABLE role(
+CREATE TABLE roles(
     id INT PRIMARY KEY AUTO_INCREMENT,
     title VARCHAR(30) NOT NULL,
-    salary DECIMAL NOT NULL,
-    department_id REFERENCES department(id) NOT NULL
+    salary INT NOT NULL,
+    department_id INT REFERENCES departments(id)
 );
 
-CREATE TABLE employee(
+CREATE TABLE employees(
     id INT PRIMARY KEY AUTO_INCREMENT,
     first_name VARCHAR(30) NOT NULL,
     last_name VARCHAR(30) NOT NULL,
-    manager_id INT REFERENCES employee(id),
-    role_id INT REFERENCES role(id) NOT NULL
+    manager_id INT REFERENCES employees(id),
+    role_id INT REFERENCES roles(id)
 )
