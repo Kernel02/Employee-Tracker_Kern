@@ -19,7 +19,7 @@
   ## Usage
    In the command line enter 'node index.js' and select one of the options. Follow all prompts given and if an error is ever returned, simply enter 'node index.js' and try again.
    
-   Watch the following video for a usage example: 
+   Click [here](https://watch.screencastify.com/v/NDzjhafyFbzOcj6gEf83) to watch a usage example video.
     
   ## License
    [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
