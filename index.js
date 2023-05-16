@@ -158,7 +158,9 @@ function addEmployee() {
       db.query(
         `INSERT INTO employees(first_name, last_name, manager_id, role_id) VALUES ('${response.first_name}', '${response.last_name}', ${response.manager}, ${response.role})`,
         (err, result) => {
-          err ? console.log(err) : console.log("\nEmployee succesfully added\n");
+          err
+            ? console.log(err)
+            : console.log("\nEmployee succesfully added\n");
           runOptions();
         }
       );
@@ -196,8 +198,12 @@ function updateEmployee() {
     ])
     .then((response) => {
       db.query(
-        `UPDATE employees SET first_name = '${response.first_name}', last_name = '${response.last_name}', manager_id = ${response.manager}, role_id = ${response.role} WHERE id = ${response.id}`, (err, results) => {
-          err ? console.log(err) : console.log("\nEmployee succesfully updated\n")
+        `UPDATE employees SET first_name = '${response.first_name}', last_name = '${response.last_name}', manager_id = ${response.manager}, role_id = ${response.role} WHERE id = ${response.id}`,
+        (err, results) => {
+          err
+            ? console.log(err)
+            : console.log("\nEmployee succesfully updated\n");
+          runOptions();
         }
       );
     });
