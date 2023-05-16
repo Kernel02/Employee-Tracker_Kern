@@ -40,7 +40,7 @@ function checkOption(option) {
   switch (option) {
     case "View all departments":
       db.query("SELECT * FROM departments", (err, results) => {
-        console.table(results);
+        err ? console.log(err) : console.table(results);
         runOptions();
       });
       break;
@@ -48,7 +48,7 @@ function checkOption(option) {
       db.query(
         "SELECT roles.id, title, salary, departments.name FROM roles JOIN departments ON departments.id = roles.department_id",
         (err, results) => {
-          console.table(results);
+          err ? console.log(err) : console.table(results);
           runOptions();
         }
       );
@@ -57,10 +57,11 @@ function checkOption(option) {
       db.query(
         "SELECT employees.id, first_name, last_name, roles.title, manager_id FROM employees JOIN roles ON roles.id = employees.role_id",
         (err, results) => {
-          console.table(results);
+          err ? console.log(err) : console.table(results);
           runOptions();
         }
       );
+
       break;
     case "Add a department":
       addDepartment();
@@ -86,8 +87,16 @@ function addDepartment() {
       name: "name",
     })
     .then((response) => {
-      db.query("INSERT INTO departments(name) VALUES (?)", response.name);
-      runOptions();
+      db.query(
+        "INSERT INTO departments(name) VALUES (?)",
+        response.name,
+        (err, result) => {
+          err
+            ? console.log(err)
+            : console.log("\nDepartment succesfully added\n");
+          runOptions();
+        }
+      );
     });
 }
 
@@ -112,9 +121,12 @@ function addRole() {
     ])
     .then((response) => {
       db.query(
-        `INSERT INTO roles(title, salary, department_id) VALUES ('${response.title}', ${response.salary}, ${response.department})`
+        `INSERT INTO roles(title, salary, department_id) VALUES ('${response.title}', ${response.salary}, ${response.department})`,
+        (err, result) => {
+          err ? console.log(err) : console.log("\nRole succesfully added\n");
+          runOptions();
+        }
       );
-      runOptions();
     });
 }
 
@@ -144,9 +156,12 @@ function addEmployee() {
     ])
     .then((response) => {
       db.query(
-        `INSERT INTO employees(first_name, last_name, manager_id, role_id) VALUES ('${response.first_name}', '${response.last_name}', ${response.manager}, ${response.role})`
+        `INSERT INTO employees(first_name, last_name, manager_id, role_id) VALUES ('${response.first_name}', '${response.last_name}', ${response.manager}, ${response.role})`,
+        (err, result) => {
+          err ? console.log(err) : console.log("\nEmployee succesfully added\n");
+          runOptions();
+        }
       );
-      runOptions();
     });
 }
 
@@ -181,9 +196,10 @@ function updateEmployee() {
     ])
     .then((response) => {
       db.query(
-        `UPDATE employees SET first_name = '${response.first_name}', last_name = '${response.last_name}', manager_id = ${response.manager}, role_id = ${response.role} WHERE id = ${response.id}`
+        `UPDATE employees SET first_name = '${response.first_name}', last_name = '${response.last_name}', manager_id = ${response.manager}, role_id = ${response.role} WHERE id = ${response.id}`, (err, results) => {
+          err ? console.log(err) : console.log("\nEmployee succesfully updated\n")
+        }
       );
-      runOptions();
     });
 }
 
